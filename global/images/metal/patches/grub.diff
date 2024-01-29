@@ -1,0 +1,12 @@
+diff --git a/data/EFI/xenserver/grub.cfg b/data/EFI/xenserver/grub.cfg
+index 656f9ed..a9075f7 100644
+--- a/data/EFI/xenserver/grub.cfg
++++ b/data/EFI/xenserver/grub.cfg
+@@ -18,7 +18,7 @@ set timeout=5
+
+ menuentry "install" {
+     multiboot2 /boot/xen.gz dom0_max_vcpus=1-16 dom0_mem=max:8192M com1=115200,8n1 console=com1,vga
+-    module2 /boot/vmlinuz console=hvc0 console=tty0
++    module2 /boot/vmlinuz console=hvc0 console=tty0 answerfile=http://192.168.1.5:8000/answerfile.xml install
+     module2 /install.img
+ }

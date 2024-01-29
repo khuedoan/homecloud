@@ -13,8 +13,13 @@
       {
         devShells.default = mkShell {
           packages = [
+            aria2
             bmake
+            cdrkit
+            libisoburn
             opentofu
+            packer # TODO find a FOSS replacement
+            syslinux
           ];
         };
       }
