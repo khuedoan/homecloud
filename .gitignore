@@ -1,4 +1,3 @@
-*.iso
 .env
 .terraform
 .terraform.lock.hcl

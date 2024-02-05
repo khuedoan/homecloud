@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<!-- https://docs.xcp-ng.org/appendix/answerfile -->
-<installation srtype="ext">
-    <admin-interface name="eth0" proto="dhcp"/>
-    <primary-disk>sda</primary-disk>
-    <source type="local"/>
-    <root-password>root</root-password>
-</installation>
