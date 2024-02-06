@@ -13,8 +13,10 @@
       {
         devShells.default = mkShell {
           packages = [
+            ansible
             bmake
             opentofu
+            sshpass
           ];
         };
       }
