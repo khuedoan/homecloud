@@ -1,11 +1,8 @@
-resource "proxmox_virtual_environment_file" "ubuntu2204" {
+resource "proxmox_virtual_environment_download_file" "ubuntu2204" {
   content_type = "iso"
   datastore_id = "local"
   node_name    = "proxmox"
-
-  source_file {
-    path = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
-  }
+  url          = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
 }
 
 resource "random_password" "testing" {
@@ -27,7 +24,7 @@ resource "proxmox_virtual_environment_vm" "foobar" {
   }
 
   disk {
-    file_id   = proxmox_virtual_environment_file.ubuntu2204.id
+    file_id   = proxmox_virtual_environment_download_file.ubuntu2204.id
     interface = "scsi0"
   }
 
