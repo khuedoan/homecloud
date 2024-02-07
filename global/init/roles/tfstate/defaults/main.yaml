@@ -1,0 +1,3 @@
+tfstate_backends:
+  - tfstate_global
+  - tfstate_staging

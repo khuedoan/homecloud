@@ -1,0 +1,15 @@
+- name: Install PostgreSQL packages
+  ansible.builtin.apt:
+    pkg:
+      - postgresql
+      - python3-psycopg2
+    state: present
+
+- name: Create state backends
+  community.postgresql.postgresql_db:
+    name: "{{ item }}"
+    state: present
+  become: true
+  become_user: postgres
+  become_method: su
+  loop: "{{ tfstate_backends }}"
