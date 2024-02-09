@@ -10,8 +10,8 @@ resource "random_password" "testing" {
   special = false
 }
 
-resource "proxmox_virtual_environment_vm" "foobar" {
-  name        = "foobar"
+resource "proxmox_virtual_environment_vm" "example" {
+  name        = "example"
   description = "Managed by OpenTofu (Terraform)"
   node_name   = "proxmox"
 
@@ -52,6 +52,7 @@ resource "proxmox_virtual_environment_vm" "foobar" {
   }
 
   tags = [
+    "opentofu",
     "staging"
   ]
 }

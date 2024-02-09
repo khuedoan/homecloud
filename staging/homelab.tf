@@ -1,0 +1,3 @@
+module "homelab" {
+  source = "./homelab"
+}

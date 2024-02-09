@@ -3,11 +3,8 @@
 
 default: plan
 
-init:
-	cd ${env} && tofu $@ -upgrade
-
 plan:
-	cd ${env} && tofu $@
+	cd ${env} && tofu init && tofu $@
 
 apply:
-	cd ${env} && tofu $@
+	cd ${env} && tofu init && tofu $@
