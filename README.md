@@ -46,9 +46,16 @@ From now on, Proxmox is accessible from the Tailnet via <https://proxmox:8006>.
 
 ## Environments
 
-- `global/`: manage users, groups, etc.
-- `staging/`: staging environment
-- `production/`: production environment
+- `global`: manage users, groups, etc.
+- `staging`: staging environment
+- `production`: production environment
+
+To plan/apply an environment, e.g. staging:
+
+```sh
+make plan env=staging
+make apply env=staging
+```
 
 ## Tips and tricks
 
