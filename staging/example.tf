@@ -1,10 +1,3 @@
-resource "proxmox_virtual_environment_download_file" "ubuntu2204" {
-  content_type = "iso"
-  datastore_id = "local"
-  node_name    = "proxmox"
-  url          = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
-}
-
 resource "random_password" "testing" {
   length  = 16
   special = false
@@ -24,7 +17,7 @@ resource "proxmox_virtual_environment_vm" "example" {
   }
 
   disk {
-    file_id   = proxmox_virtual_environment_download_file.ubuntu2204.id
+    file_id   = "local:iso/jammy-server-cloudimg-amd64.img"
     interface = "scsi0"
   }
 

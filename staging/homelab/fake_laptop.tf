@@ -1,10 +1,3 @@
-resource "proxmox_virtual_environment_download_file" "nixos2311" {
-  content_type = "iso"
-  datastore_id = "local"
-  node_name    = "proxmox"
-  url          = "https://channels.nixos.org/nixos-23.11/latest-nixos-gnome-x86_64-linux.iso"
-}
-
 resource "proxmox_virtual_environment_vm" "fake_laptop" {
   count       = 1
   name        = "${local.name_prefix}-fake-laptop"
@@ -12,16 +5,16 @@ resource "proxmox_virtual_environment_vm" "fake_laptop" {
   node_name   = "proxmox"
 
   cpu {
-    cores = 1
+    cores = 2
   }
 
   memory {
-    dedicated = 1024 * 2
+    dedicated = 1024 * 4
   }
 
   cdrom {
     enabled = true
-    file_id = proxmox_virtual_environment_download_file.nixos2311.id
+    file_id = "local:iso/latest-nixos-gnome-x86_64-linux.iso"
   }
 
   disk {
