@@ -1,5 +1,4 @@
 resource "proxmox_virtual_environment_vm" "fake_laptop" {
-  count       = 1
   name        = "${local.name_prefix}-fake-laptop"
   description = "Staging initial controller for https://github.com/khuedoan/homelab, acting as a laptop connected to the same LAN using wired connection"
   node_name   = "proxmox"
@@ -13,8 +12,9 @@ resource "proxmox_virtual_environment_vm" "fake_laptop" {
   }
 
   cdrom {
-    enabled = true
-    file_id = "local:iso/latest-nixos-gnome-x86_64-linux.iso"
+    enabled   = true
+    file_id   = "local:iso/latest-nixos-gnome-x86_64-linux.iso"
+    interface = "ide3"
   }
 
   disk {
@@ -23,6 +23,11 @@ resource "proxmox_virtual_environment_vm" "fake_laptop" {
     size         = 32
     file_format  = "raw"
   }
+
+  boot_order = [
+    "scsi0",
+    "ide3",
+  ]
 
   bios = "ovmf"
 
