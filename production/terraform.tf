@@ -1,8 +1,12 @@
 terraform {
+  backend "pg" {
+    conn_str = "postgres://proxmox/tfstate_production"
+  }
+
   required_providers {
     proxmox = {
-      source = "bpg/proxmox"
-      version = "0.38.1"
+      source  = "bpg/proxmox"
+      version = "0.46.2"
     }
   }
 }

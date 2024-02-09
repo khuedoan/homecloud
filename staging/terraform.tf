@@ -1,4 +1,8 @@
 terraform {
+  backend "pg" {
+    conn_str = "postgres://proxmox/tfstate_staging"
+  }
+
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
