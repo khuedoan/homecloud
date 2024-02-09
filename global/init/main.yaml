@@ -2,3 +2,4 @@
   roles:
     - repositories
     - tfstate
+    - tailscale
