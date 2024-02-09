@@ -4,12 +4,7 @@
 default: apply
 
 apply:
-	ansible-playbook \
-		--inventory hosts.ini \
-		--ask-pass \
-		main.yaml
+	ansible-playbook main.yaml
 
 console:
-	ansible-console \
-		--inventory hosts.ini \
-		--ask-pass
+	ansible-console

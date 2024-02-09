@@ -5,9 +5,45 @@
       - python3-psycopg2
     state: present
 
-- name: Create state backends
+- name: Configure PostgreSQL
+  ansible.builtin.lineinfile:
+    path: "/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf"
+    line: "{{ item.line }}"
+    regex: "{{ item.regex }}"
+    state: present
+  loop:
+    - line: "listen_addresses = '*'"
+      regex: "^listen_addresses"
+  notify: Restart PostgreSQL
+
+- name: Configure PostgreSQL client authentication
+  ansible.builtin.lineinfile:
+    path: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
+    line: "{{ item }}"
+    state: present
+  loop:
+    # Allow private networks and Tailscale
+    # https://en.wikipedia.org/wiki/Private_network
+    # https://tailscale.com/kb/1015/100.x-addresses
+    - "hostssl all all 10.0.0.0/8 scram-sha-256"
+    - "hostssl all all 172.16.0.0/12 scram-sha-256"
+    - "hostssl all all 192.168.0.0/16 scram-sha-256"
+    - "hostssl all all 100.64.0.0/10 scram-sha-256"
+  notify: Restart PostgreSQL
+
+- name: Create state user
+  community.postgresql.postgresql_user:
+    name: tfstate
+    password: "{{ tfstate_postgresql_password }}"
+    state: present
+  become: true
+  become_user: postgres
+  become_method: su
+
+- name: Create state databases
   community.postgresql.postgresql_db:
     name: "{{ item }}"
+    owner: tfstate
     state: present
   become: true
   become_user: postgres
