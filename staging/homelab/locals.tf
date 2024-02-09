@@ -1,3 +1,3 @@
 locals {
-  name_prefix = "homelab-staging"
+  name_prefix = "homelab"
 }
