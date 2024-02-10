@@ -38,7 +38,7 @@ Then connect it to Tailscale:
 
 ```sh
 ssh root@${PROXMOX_IP}
-tailscale up
+tailscale up --accept-dns=false
 ```
 
 Follow the link to authenticate and optionally disable key expiry in Tailscale admin console.
