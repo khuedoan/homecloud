@@ -1,7 +1,12 @@
 .POSIX:
 .PHONY: *
 
-default: staging
+default: init global staging production
+
+init:
+	cd global/init \
+		&& ansible-playbook main.yaml
 
 global staging production:
-	cd ${@} && tofu apply
+	cd ${@} \
+		&& tofu apply

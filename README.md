@@ -57,8 +57,7 @@ Then boot to the USB drive and install Proxmox.
 There are some initial setup for Proxmox and OpenTofu state backend:
 
 ```sh
-cd global/init
-make
+make init
 ```
 
 Then connect it to Tailscale:
@@ -71,17 +70,17 @@ tailscale up --accept-dns=false
 Follow the link to authenticate and optionally disable key expiry in Tailscale admin console.
 From now on, Proxmox is accessible from the Tailnet via <https://proxmox:8006>.
 
-## Environments
+## Project structure
 
 - `global`: manage users, groups, etc.
 - `staging`: staging environment
 - `production`: production environment
 
-To plan/apply an environment, e.g. staging:
+To apply an environment, e.g. staging:
 
 ```sh
-make plan env=staging
-make apply env=staging
+make staging
+```
 ```
 
 ## Tips and tricks
