@@ -81,7 +81,25 @@ To apply an environment, e.g. staging:
 ```sh
 make staging
 ```
+
+To build a pre-defined VM/LXC image, e.g. `uptime-kuma`:
+
+```sh
+cd global/images
+nix build --no-link --print-out-paths .#uptime-kuma
 ```
+
+Copy the output path and put it in `global/images.tf`, then run `make global`.
+The images are fully producible and hermetic and always produce the same hash
+if given the same inputs.
+
+This project embraces the idea of immutable infrastructure, so I don't upgrade
+existing VMs/CTs. Instead, I build a new image, feed it to Proxmox, and replace
+the VM/CT. Only data mounted to a separate disk is kept (if you're familiar with
+Docker, the mental model is similar to `docker run --volume`). Another benefit
+of this approach is that it stops me from constantly reinstalling VMs/CTs if I
+feel like they're "dirty", since everything is always in a clean state, and if
+not, it will be wiped in the next image update.
 
 ## Tips and tricks
 
