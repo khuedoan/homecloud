@@ -1,10 +1,7 @@
 .POSIX:
 .PHONY: *
 
-default: plan
+default: staging
 
-plan:
-	cd ${env} && tofu init && tofu $@
-
-apply:
-	cd ${env} && tofu init && tofu $@
+global staging production:
+	cd ${@} && tofu apply
