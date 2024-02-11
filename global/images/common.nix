@@ -1,6 +1,12 @@
 { config, pkgs, ... }:
 
 {
+  networking = {
+    networkmanager = {
+      enable = true;
+    };
+  };
+
   nix = {
     settings = {
       experimental-features = [
