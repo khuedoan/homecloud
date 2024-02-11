@@ -22,30 +22,11 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    git
-    gnumake
-    neovim
-  ];
-
-  programs = {
-    direnv = {
-      enable = true;
-      silent = true;
-    };
-  };
-
   services = {
     getty = {
       autologinUser = "root";
     };
     openssh = {
-      enable = true;
-    };
-  };
-
-  virtualisation = {
-    docker = {
       enable = true;
     };
   };

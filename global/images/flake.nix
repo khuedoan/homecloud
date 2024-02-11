@@ -15,6 +15,14 @@
           ./common.nix
         ];
       };
+      devbox = nixos-generators.nixosGenerate {
+        format = "proxmox-lxc";
+        system = "x86_64-linux";
+        modules = [
+          ./common.nix
+          ./devbox.nix
+        ];
+      };
       uptime-kuma = nixos-generators.nixosGenerate {
         format = "proxmox-lxc";
         system = "x86_64-linux";

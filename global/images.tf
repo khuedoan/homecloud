@@ -18,8 +18,9 @@ locals {
   ]
   nixos_lxc_images = {
     # TODO get image ID automatically, maybe with data.external
-    "base"        = "/nix/store/gffvg8nx9klrgw93sdsjcmx035npnzvs-tarball"
-    "uptime-kuma" = "/nix/store/s9yw8920f149ln011d8vgx1y6b4cla14-tarball"
+    "base"        = "/nix/store/drkh5k2lc3nybvanpsvxrjmsc7p47fl9-tarball"
+    "devbox"      = "/nix/store/22xh3bjng1a4cqn674bh13j3m4r4g6l8-tarball"
+    "uptime-kuma" = "/nix/store/6zlk1s150wlphpb28n15jyhzai2xx1hl-tarball"
   }
 }
 
