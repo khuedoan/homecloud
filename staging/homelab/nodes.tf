@@ -24,7 +24,7 @@ resource "proxmox_virtual_environment_vm" "nodes" {
   }
 
   tags = [
-    "opentofu",
+    "homecloud",
     "staging"
   ]
 }

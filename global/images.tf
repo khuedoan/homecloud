@@ -14,8 +14,8 @@ resource "proxmox_virtual_environment_download_file" "nixos2311" {
 
 
 locals {
-  nixos_vm_images = [
-  ]
+  nixos_vm_images = {
+  }
   nixos_lxc_images = {
     # TODO get image ID automatically, maybe with data.external
     "base"        = "/nix/store/drkh5k2lc3nybvanpsvxrjmsc7p47fl9-tarball"

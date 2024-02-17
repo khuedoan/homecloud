@@ -40,7 +40,7 @@ resource "proxmox_virtual_environment_vm" "fake_laptop" {
   }
 
   tags = [
-    "opentofu",
+    "homecloud",
     "staging"
   ]
 }

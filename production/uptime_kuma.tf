@@ -42,7 +42,7 @@ resource "proxmox_virtual_environment_container" "uptime_kuma" {
   }
 
   tags = [
-    "opentofu",
+    "homecloud",
     "production"
   ]
 }
