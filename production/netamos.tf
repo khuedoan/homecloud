@@ -4,11 +4,11 @@ resource "proxmox_virtual_environment_vm" "netamos" {
   node_name   = "proxmox"
 
   cpu {
-    cores = 4
+    cores = 8
   }
 
   memory {
-    dedicated = 1024 * 8
+    dedicated = 1024 * 16
   }
 
   cdrom {
