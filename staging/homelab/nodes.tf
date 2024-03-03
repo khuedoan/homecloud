@@ -12,6 +12,13 @@ resource "proxmox_virtual_environment_vm" "nodes" {
     dedicated = 1024 * 8
   }
 
+  disk {
+    datastore_id = "local-lvm"
+    interface    = "scsi0"
+    size         = 128
+    file_format  = "raw"
+  }
+
   bios = "ovmf"
 
   operating_system {
