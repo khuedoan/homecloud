@@ -16,6 +16,7 @@
             ansible
             bmake
             opentofu
+            rsync
             sshpass
           ];
         };

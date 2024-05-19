@@ -1,11 +1,15 @@
-.POSIX:
 .PHONY: *
 
-default: init global staging production
+default: init images staging production
 
 init:
 	cd global/init \
 		&& ansible-playbook main.yaml
+
+images:
+	cd global/images \
+		&& make base \
+		&& make devbox
 
 global staging production:
 	cd ${@} \
