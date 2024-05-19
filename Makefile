@@ -9,4 +9,5 @@ init:
 
 global staging production:
 	cd ${@} \
+		&& tofu init -upgrade \
 		&& tofu apply
