@@ -82,16 +82,18 @@ To apply an environment, e.g. staging:
 make staging
 ```
 
-To build a pre-defined VM/LXC image, e.g. `base`:
+To build and upload an image, e.g. `base`:
 
 ```sh
 cd global/images
-nix build --no-link --print-out-paths .#base
+make base
 ```
 
-Copy the output path and put it in `global/images.tf`, then run `make global`.
-The images are fully producible and hermetic and always produce the same hash
-if given the same inputs.
+The images are fully producible and hermetic. In theory, any instance running
+`nixos-rebuild` on the same flake will be updated to essentially the same
+configuration as if it were replaced by a new image, but I haven't got this to
+work with LXC images yet, so right now I just taint and replace the LXC
+containers.
 
 ## Tips and tricks
 

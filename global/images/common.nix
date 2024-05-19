@@ -23,11 +23,20 @@
   };
 
   services = {
-    getty = {
-      autologinUser = "root";
-    };
     openssh = {
       enable = true;
+    };
+  };
+
+  users.users = {
+    admin = {
+      isNormalUser = true;
+      # Generated with mkpasswd --method=bcrypt --rounds=16
+      # See ../../README.md to decrypt the password in ../init/group_vars/proxmox/vault.yaml
+      initialHashedPassword = "$2b$16$1/UdSSh4cE9UbH1PG8uIt.9VutcfR.jZNiDkv.M5A4h.swYEXNOIm";
+      extraGroups = [
+        "wheel"
+      ];
     };
   };
 

@@ -19,4 +19,12 @@
       enable = true;
     };
   };
+
+  users.users = {
+    admin = {
+      extraGroups = [
+        "docker"
+      ];
+    };
+  };
 }
