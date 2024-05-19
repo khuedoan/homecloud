@@ -15,6 +15,7 @@
           packages = [
             ansible
             bmake
+            kubectl
             opentofu
             rsync
             sshpass

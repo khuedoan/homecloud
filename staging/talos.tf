@@ -1,0 +1,3 @@
+module "talos" {
+  source = "./talos"
+}
