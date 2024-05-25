@@ -25,7 +25,7 @@ resource "proxmox_virtual_environment_vm" "nodes" {
 
   cdrom {
     enabled   = true
-    file_id   = "local:iso/talos-metal-amd64.iso"
+    file_id   = proxmox_virtual_environment_download_file.talos.id
     interface = "ide3"
   }
 
