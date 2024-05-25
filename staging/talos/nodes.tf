@@ -63,6 +63,7 @@ resource "proxmox_virtual_environment_vm" "nodes" {
 
 locals {
   # https://www.talos.dev/v1.7/talos-guides/network/predictable-interface-names/
+  # TODO just a hack for now, using the last interface in the list
   node_ip = proxmox_virtual_environment_vm.nodes.ipv4_addresses[length(proxmox_virtual_environment_vm.nodes.ipv4_addresses) - 1][0]
 }
 
@@ -79,7 +80,6 @@ data "talos_client_configuration" "this" {
   cluster_name         = "example-cluster"
   client_configuration = talos_machine_secrets.this.client_configuration
   nodes = [
-    # TODO do not hardcode IP, and make it work while I'm not at home
     local.node_ip
   ]
 }
@@ -87,7 +87,8 @@ data "talos_client_configuration" "this" {
 resource "talos_machine_configuration_apply" "this" {
   client_configuration        = talos_machine_secrets.this.client_configuration
   machine_configuration_input = data.talos_machine_configuration.this.machine_configuration
-  node                        = local.node_ip
+  node                        = "master"
+  endpoint                    = local.node_ip
   config_patches = [
     yamlencode({
       machine = {
