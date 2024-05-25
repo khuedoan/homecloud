@@ -2,8 +2,11 @@ resource "proxmox_virtual_environment_download_file" "talos" {
   content_type = "iso"
   datastore_id = "local"
   node_name    = "proxmox"
-  url          = "https://github.com/siderolabs/talos/releases/download/v1.7.2/metal-amd64.iso"
-  file_name    = "talos-metal-amd64.iso"
+
+  # Latest version with QEMU agent
+  # https://factory.talos.dev/?arch=amd64&cmdline-set=true&extensions=-&extensions=siderolabs%2Fqemu-guest-agent&platform=metal&target=metal
+  url       = "https://factory.talos.dev/image/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515/v1.7.2/metal-amd64.iso"
+  file_name = "talos-metal-amd64.iso"
 }
 
 resource "proxmox_virtual_environment_vm" "nodes" {
@@ -66,7 +69,7 @@ data "talos_machine_configuration" "this" {
 data "talos_client_configuration" "this" {
   cluster_name         = "example-cluster"
   client_configuration = talos_machine_secrets.this.client_configuration
-  nodes                = [
+  nodes = [
     # TODO do not hardcode IP, and make it work while I'm not at home
     "192.168.1.10"
   ]
