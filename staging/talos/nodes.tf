@@ -87,7 +87,8 @@ resource "talos_machine_configuration_apply" "this" {
     yamlencode({
       machine = {
         install = {
-          disk = "/dev/sda"
+          image = "factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.7.2" # see factory link above
+          disk  = "/dev/sda"
         }
       }
     })
