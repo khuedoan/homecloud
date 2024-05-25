@@ -61,12 +61,17 @@ resource "proxmox_virtual_environment_vm" "nodes" {
   ]
 }
 
+locals {
+  # https://www.talos.dev/v1.7/talos-guides/network/predictable-interface-names/
+  node_ip = proxmox_virtual_environment_vm.nodes.ipv4_addresses[length(proxmox_virtual_environment_vm.nodes.ipv4_addresses) - 1][0]
+}
+
 resource "talos_machine_secrets" "this" {}
 
 data "talos_machine_configuration" "this" {
   cluster_name     = "example-cluster"
   machine_type     = "controlplane"
-  cluster_endpoint = "https://${proxmox_virtual_environment_vm.nodes.ipv4_addresses[0]}:6443"
+  cluster_endpoint = "https://${local.node_ip}:6443"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
 }
 
@@ -75,14 +80,14 @@ data "talos_client_configuration" "this" {
   client_configuration = talos_machine_secrets.this.client_configuration
   nodes = [
     # TODO do not hardcode IP, and make it work while I'm not at home
-    proxmox_virtual_environment_vm.nodes.ipv4_addresses[0]
+    local.node_ip
   ]
 }
 
 resource "talos_machine_configuration_apply" "this" {
   client_configuration        = talos_machine_secrets.this.client_configuration
   machine_configuration_input = data.talos_machine_configuration.this.machine_configuration
-  node                        = proxmox_virtual_environment_vm.nodes.ipv4_addresses[0]
+  node                        = local.node_ip
   config_patches = [
     yamlencode({
       machine = {
@@ -99,7 +104,7 @@ resource "talos_machine_bootstrap" "this" {
   depends_on = [
     talos_machine_configuration_apply.this
   ]
-  node                 = proxmox_virtual_environment_vm.nodes.ipv4_addresses[0]
+  node                 = local.node_ip
   client_configuration = talos_machine_secrets.this.client_configuration
 }
 
@@ -108,11 +113,11 @@ data "talos_cluster_kubeconfig" "this" {
     talos_machine_bootstrap.this
   ]
   client_configuration = talos_machine_secrets.this.client_configuration
-  node                 = proxmox_virtual_environment_vm.nodes.ipv4_addresses[0]
+  node                 = local.node_ip
 }
 
 resource "local_file" "kubeconfig" {
-  content         = replace(data.talos_cluster_kubeconfig.this.kubeconfig_raw, "cluster.local", proxmox_virtual_environment_vm.nodes.ipv4_addresses[0])
+  content         = replace(data.talos_cluster_kubeconfig.this.kubeconfig_raw, "cluster.local", local.node_ip)
   filename        = "${path.root}/kubeconfig.yaml"
   file_permission = "0600"
 }
