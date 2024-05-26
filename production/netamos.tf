@@ -13,7 +13,7 @@ resource "proxmox_virtual_environment_vm" "netamos" {
 
   cdrom {
     enabled   = true
-    file_id   = "local:iso/latest-nixos-gnome-x86_64-linux.iso"
+    file_id   = "local:iso/nixos-23.11-gnome-x86_64-linux.iso"
     interface = "ide3"
   }
 
