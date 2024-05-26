@@ -62,9 +62,11 @@ resource "proxmox_virtual_environment_vm" "nodes" {
 }
 
 locals {
+  # TODO do I really need this hack to lookup the node IP??
   # https://www.talos.dev/v1.7/talos-guides/network/predictable-interface-names/
-  # TODO just a hack for now, using the last interface in the list
-  node_ip = proxmox_virtual_environment_vm.nodes.ipv4_addresses[length(proxmox_virtual_environment_vm.nodes.ipv4_addresses) - 1][0]
+  node_interface = "enx${lower(replace(proxmox_virtual_environment_vm.nodes.network_device[0].mac_address, ":", ""))}"
+  node_interface_index = index(proxmox_virtual_environment_vm.nodes.network_interface_names, local.node_interface)
+  node_ip = proxmox_virtual_environment_vm.nodes.ipv4_addresses[local.node_interface_index][0]
 }
 
 resource "talos_machine_secrets" "this" {}
