@@ -66,7 +66,7 @@ locals {
   # https://www.talos.dev/v1.7/talos-guides/network/predictable-interface-names/
   node_interface = "enx${lower(replace(proxmox_virtual_environment_vm.nodes.network_device[0].mac_address, ":", ""))}"
   node_interface_index = index(proxmox_virtual_environment_vm.nodes.network_interface_names, local.node_interface)
-  node_ip = proxmox_virtual_environment_vm.nodes.ipv4_addresses[local.node_interface_index][0]
+  node_ip = proxmox_virtual_environment_vm.nodes.ipv6_addresses[local.node_interface_index][0]
 }
 
 resource "talos_machine_secrets" "this" {}
@@ -74,7 +74,7 @@ resource "talos_machine_secrets" "this" {}
 data "talos_machine_configuration" "this" {
   cluster_name     = "example-cluster"
   machine_type     = "controlplane"
-  cluster_endpoint = "https://${local.node_ip}:6443"
+  cluster_endpoint = "https://[${local.node_ip}]:6443"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
 }
 
