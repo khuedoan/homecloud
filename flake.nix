@@ -1,26 +1,31 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      with pkgs;
-      {
-        devShells.default = mkShell {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (system: {
+      devShells.default =
+        with nixpkgs.legacyPackages.${system};
+        mkShell {
           packages = [
-            ansible
-            bmake
+            gnumake
             kubectl
-            opentofu
-            rsync
-            sshpass
+            nixfmt-rfc-style
           ];
         };
-      }
-    );
+
+      nixosConfigurations = {
+        homecloud-0 = nixpkgs.lib.nixosSystem {
+          system = "${system}";
+          modules = [ ./metal/configuration.nix ];
+        };
+      };
+    });
 }

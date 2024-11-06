@@ -15,3 +15,6 @@ global staging production:
 	cd ${@} \
 		&& tofu init -upgrade \
 		&& tofu apply
+
+fmt:
+	nixfmt flake.nix
