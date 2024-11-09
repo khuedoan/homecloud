@@ -2,6 +2,14 @@
 
 default: init images staging production
 
+install:
+	sudo nix \
+		--experimental-features 'nix-command flakes' \
+		run \
+		'github:nix-community/disko#disko-install' \
+		-- \
+		--flake
+
 init:
 	cd global/init \
 		&& ansible-playbook main.yaml
