@@ -29,7 +29,7 @@ fmt:
 	nixfmt flake.nix metal/*.nix
 
 test:
-	nix \
+	@nix \
 		--experimental-features 'nix-command flakes' \
 		run \
 		'.#nixosConfigurations.test.config.system.build.vmWithDisko'
