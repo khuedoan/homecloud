@@ -8,7 +8,8 @@ install:
 		run \
 		'github:nix-community/disko#disko-install' \
 		-- \
-		--flake
+		--flake \
+		'.#homecloud'
 
 init:
 	cd global/init \
@@ -25,4 +26,10 @@ global staging production:
 		&& tofu apply
 
 fmt:
-	nixfmt flake.nix
+	nixfmt flake.nix metal/*.nix
+
+test:
+	nix \
+		--experimental-features 'nix-command flakes' \
+		run \
+		'.#nixosConfigurations.test.config.system.build.vmWithDisko'

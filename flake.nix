@@ -15,27 +15,24 @@
       flake-utils,
       disko,
     }:
-    flake-utils.lib.eachDefaultSystem (system: {
-      devShells.default =
-        with nixpkgs.legacyPackages.${system};
-        mkShell {
-          packages = [
-            gnumake
-            kubectl
-            nixfmt-rfc-style
-          ];
-        };
-
+    {
       nixosConfigurations = {
-        homecloud-0 = nixpkgs.lib.nixosSystem {
-          system = "${system}";
+        homecloud = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
           modules = [
             disko.nixosModules.disko
             ./metal/configuration.nix
-            ./metal/disk.nix
-            { disko.devices.disk.main.device = "/dev/vda"; }
+            { disko.devices.disk.main.device = "/dev/sda"; }
+          ];
+        };
+        test = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            ./metal/configuration.nix
+            ./metal/hosts/test.nix
           ];
         };
       };
-    });
+    };
 }
