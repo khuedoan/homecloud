@@ -1,0 +1,5 @@
+# Run age-keygen
+# Save the private key to a password manager and ~/.config/sops/age/keys.txt
+# Paste the public key here
+creation_rules:
+  - age: age1lgnedde9cd895vc3wm4prt088wtgke7j8yr948er0grhngymhacsqpkeay

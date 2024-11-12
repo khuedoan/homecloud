@@ -32,4 +32,5 @@ test:
 	@nix \
 		--experimental-features 'nix-command flakes' \
 		run \
+		--impure \
 		'.#nixosConfigurations.test.config.system.build.vmWithDisko'

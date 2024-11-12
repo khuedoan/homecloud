@@ -7,8 +7,11 @@
 {
   imports = [
     ./disks.nix
-    ./users.nix
     ./incus.nix
+    ./network.nix
+    ./secrets.nix
+    ./ssh.nix
+    ./users.nix
   ];
 
   boot = {

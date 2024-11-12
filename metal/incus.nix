@@ -5,14 +5,6 @@
   ...
 }:
 {
-  networking = {
-    nftables = {
-      enable = true;
-    };
-    firewall = {
-      allowedTCPPorts = [ 8443 ];
-    };
-  };
   virtualisation = {
     incus = {
       enable = true;

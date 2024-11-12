@@ -17,5 +17,12 @@
         guest.port = 8443;
       }
     ];
+    sharedDirectories = {
+      age = {
+        # TODO this requires impure and hard coded path
+        source = "/home/khuedoan/.config/sops/age";
+        target = "/root/.config/sops/age";
+      };
+    };
   };
 }
