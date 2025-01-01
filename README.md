@@ -19,13 +19,13 @@ such as redundancy, multiple regions, health checks, etc.
 
 A few key components are necessary:
 
-- Proxmox provides the hypervisor, a web console, and management APIs (which can
+- Incus provides the hypervisor, a web console, and management APIs (which can
   be automated with OpenTofu - a Terraform fork).
 - Managed services are immutable VM/LXC images built with NixOS.
 
 I use this project for three main purposes:
 
-- Offsite backup: the Proxmox node is located at my parents' house in a different
+- Offsite backup: the Incus node is located at my parents' house in a different
   region of my country, with a separate disk that I mount to a VM running Minio.
 - External monitoring system for my main monitoring system: [quis custodiet ipsos custodes?](https://en.wikipedia.org/wiki/Quis_custodiet_ipsos_custodes%3F)
 - A flexible playground: because my main Kubernetes cluster runs on bare-metal nodes,
@@ -34,81 +34,22 @@ I use this project for three main purposes:
 
 ## Installation
 
-### Proxmox Virtual Environment
+### Install with the NixOS Live CD
 
-Download Proxmox VE ISO:
-
-<https://www.proxmox.com/en/downloads>
-
-Write it to a USB drive:
+1. Download the latest NixOS live CD from [here](https://nixos.org/download).
+2. Create a bootable USB drive:
 
 ```sh
-lsblk
-sudo dd bs=1M if=proxmox-ve_${VERSION}.iso of=/dev/${USB_DRIVE}
+sudo dd bs=4M if=/path/to/nixos.iso of=/dev/sda conv=fsync oflag=direct status=progress
 ```
 
-Then boot to the USB drive and install Proxmox.
-
-- Hostname: `proxmox`
-- Root password: save it to a password manager
-
-### Prerequisites for automation
-
-There are some initial setup for Proxmox and OpenTofu state backend:
+3. Boot from the USB drive.
+4. Install NixOS from the live CD:
 
 ```sh
-make init
-```
-
-Then connect it to Tailscale:
-
-```sh
-ssh root@${PROXMOX_IP}
-tailscale up --accept-dns=false
-```
-
-Follow the link to authenticate and optionally disable key expiry in Tailscale admin console.
-From now on, Proxmox is accessible from the Tailnet via <https://proxmox:8006>.
-
-## Project structure
-
-- `global`: manage users, groups, etc.
-- `staging`: staging environment
-- `production`: production environment
-
-To apply an environment, e.g. staging:
-
-```sh
-make staging
-```
-
-To build and upload an image, e.g. `base`:
-
-```sh
-cd global/images
-make base
-```
-
-The images are fully producible and hermetic. In theory, any instance running
-`nixos-rebuild` on the same flake will be updated to essentially the same
-configuration as if it were replaced by a new image, but I haven't got this to
-work with LXC images yet, so right now I just taint and replace the LXC
-containers.
-
-## Tips and tricks
-
-OpenTofu (Terraform) PostgreSQL backend debugging example:
-
-```sh
-# Connect to staging state storage
-$ psql --user=tfstate --host=proxmox tfstate_staging
-# The table is keyed by the workspace name.
-# If workspaces are not in use, the name default is used.
-tfstate_staging=> SELECT * FROM terraform_remote_state.states;
-```
-
-Update encrypted variables in Ansible Vault:
-
-```sh
-ansible-vault edit example/path/to/vault.yaml
+nix-shell -p git gnumake neovim
+git clone https://github.com/khuedoan/homecloud
+cd homecloud
+# Remember to replace the placeholders
+make install host=HOSTNAME disk=/dev/DISK
 ```

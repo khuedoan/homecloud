@@ -1,9 +1,0 @@
-- name: Download ISO images
-  ansible.builtin.get_url:
-    url: "{{ item.url }}"
-    dest: "/var/lib/vz/template/iso/{{ item.name }}"
-    checksum: "{{ item.checksum }}"
-  loop:
-    - url: https://channels.nixos.org/nixos-23.11/latest-nixos-gnome-x86_64-linux.iso
-      name: nixos-23.11-gnome-x86_64-linux.iso
-      checksum: sha256:a65a7706aee4ee0e233aaa081cda713a8d62173ae389c6bbbcf6d7a8b8757424

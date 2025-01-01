@@ -1,6 +1,0 @@
-- hosts: proxmox
-  roles:
-    - repositories
-    - tfstate
-    - tailscale
-    - images

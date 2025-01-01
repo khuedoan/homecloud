@@ -1,2 +1,0 @@
-ansible_user: root
-tfstate_postgresql_password: "{{ vault_tfstate_postgresql_password }}"

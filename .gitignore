@@ -1,7 +1,2 @@
 *.qcow2
-*.tfstate*
-.env
-.terraform
-.terraform.lock.hcl
 /result
-nixos-efi-vars.fd
