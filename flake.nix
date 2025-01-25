@@ -1,26 +1,28 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      with pkgs;
-      {
-        devShells.default = mkShell {
-          packages = [
-            ansible
-            bmake
-            kubectl
-            opentofu
-            rsync
-            sshpass
-          ];
-        };
-      }
-    );
+  outputs = { self, nixpkgs }:
+  let
+    supportedSystems = nixpkgs.lib.genAttrs [
+      "x86_64-linux"
+      "aarch64-linux"
+      "aarch64-darwin"
+    ];
+  in
+  {
+    devShells = supportedSystems (system: {
+      default = with nixpkgs.legacyPackages.${system}; mkShell {
+        packages = [
+          ansible
+          bmake
+          kubectl
+          opentofu
+          rsync
+          sshpass
+        ];
+      };
+    });
+  };
 }
