@@ -8,7 +8,6 @@
     supportedSystems = nixpkgs.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
-      "aarch64-darwin"
     ];
   in
   {
@@ -17,6 +16,7 @@
         packages = [
           ansible
           go-task
+          jq
           kubectl
           opentofu
           rsync

@@ -14,3 +14,13 @@ tasks:
           rsync --progress --checksum
             "$(shell nix build --no-link --print-out-paths .\#$@ --show-trace)/tarball/nixos-system-x86_64-linux.tar.xz"
             root@proxmox:/var/lib/vz/template/cache/nixos-$@.tar.xz
+
+# nix build -L .#nixosConfigurations.installer.config.system.build.isoImage
+# scp /nix/store/...iso root@192.168.1.11:/var/lib/vz/template/iso
+# Copy ISO name
+# Add to Terraform
+# Apply
+# Get IP
+# nix run github:nix-community/nixos-anywhere -- --flake .#nixos --target-host admin@192.168.1.15
+# Get new IP
+# nixos-rebuild --flake '.#nixos' --target-host admin@192.168.1.6 switch

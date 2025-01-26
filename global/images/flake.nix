@@ -1,26 +1,27 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.11";
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, nixos-generators, ... }: {
-    packages.x86_64-linux = {
-      base = nixos-generators.nixosGenerate {
-        format = "proxmox-lxc";
+  outputs = { nixpkgs, disko, ... }: {
+    nixosConfigurations = {
+      installer = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./common.nix
+          disko.nixosModules.disko
+          ./configuration.nix
+          ./installer.nix
         ];
       };
-      devbox = nixos-generators.nixosGenerate {
-        format = "proxmox-lxc";
+      nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./common.nix
-          ./devbox.nix
+          disko.nixosModules.disko
+          ./configuration.nix
+          ./disks.nix
         ];
       };
     };
