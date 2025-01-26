@@ -57,7 +57,7 @@ Then boot to the USB drive and install Proxmox.
 There are some initial setup for Proxmox and OpenTofu state backend:
 
 ```sh
-make init
+task global:init
 ```
 
 Then connect it to Tailscale:
@@ -79,14 +79,13 @@ From now on, Proxmox is accessible from the Tailnet via <https://proxmox:8006>.
 To apply an environment, e.g. staging:
 
 ```sh
-make staging
+task ENV=staging apply
 ```
 
-To build and upload an image, e.g. `base`:
+To build and upload images:
 
 ```sh
-cd global/images
-make base
+task global:images
 ```
 
 The images are fully producible and hermetic. In theory, any instance running

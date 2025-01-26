@@ -1,0 +1,16 @@
+version: '3'
+
+tasks:
+  init:
+    dir: ./init
+    cmds:
+      - ansible-playbook main.yaml
+  # TODO rewrite this
+  images:
+    cmds:
+      - for:
+          - base
+        cmd: |
+          rsync --progress --checksum
+            "$(shell nix build --no-link --print-out-paths .\#$@ --show-trace)/tarball/nixos-system-x86_64-linux.tar.xz"
+            root@proxmox:/var/lib/vz/template/cache/nixos-$@.tar.xz

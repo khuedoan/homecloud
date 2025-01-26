@@ -16,7 +16,7 @@
       default = with nixpkgs.legacyPackages.${system}; mkShell {
         packages = [
           ansible
-          bmake
+          go-task
           kubectl
           opentofu
           rsync

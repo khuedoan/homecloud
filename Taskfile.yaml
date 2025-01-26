@@ -1,0 +1,30 @@
+version: '3'
+
+vars:
+  ENV: '{{.ENV | default "staging"}}'
+dotenv:
+  - .env
+includes:
+  global:
+    taskfile: ./global/Taskfile.yaml
+    dir: ./global
+tasks:
+  default:
+    cmds:
+      - task: global:init
+      - task: init
+      - task: apply
+  init:
+    dir: "./{{.ENV}}"
+    cmds:
+      - tofu init -upgrade
+  plan:
+    deps: [init]
+    dir: "./{{.ENV}}"
+    cmds:
+      - tofu plan
+  apply:
+    deps: [init]
+    dir: "./{{.ENV}}"
+    cmds:
+      - tofu apply -auto-approve
