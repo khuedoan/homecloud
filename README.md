@@ -79,7 +79,7 @@ From now on, Proxmox is accessible from the Tailnet via <https://proxmox:8006>.
 To apply an environment, e.g. staging:
 
 ```sh
-task ENV=staging apply
+task ENV=staging infra
 ```
 
 To build and upload images:

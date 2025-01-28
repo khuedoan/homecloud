@@ -8,23 +8,11 @@ includes:
   global:
     taskfile: ./global/Taskfile.yaml
     dir: ./global
+  infra:
+    taskfile: ./infra/Taskfile.yaml
+    dir: ./infra
 tasks:
   default:
     cmds:
       - task: global:init
-      - task: init
-      - task: apply
-  init:
-    dir: "./{{.ENV}}"
-    cmds:
-      - tofu init -upgrade
-  plan:
-    deps: [init]
-    dir: "./{{.ENV}}"
-    cmds:
-      - tofu plan
-  apply:
-    deps: [init]
-    dir: "./{{.ENV}}"
-    cmds:
-      - tofu apply -auto-approve
+      - task: infra
