@@ -46,3 +46,23 @@ resource "proxmox_virtual_environment_container" "devbox" {
     "staging"
   ]
 }
+
+module "devbox" {
+  source = "../modules/nixos-vm/"
+  name   = "devbox"
+  nixos = {
+    flake = "git+https://github.com/khuedoan/nixos-setup"
+    host  = "ryzentower"
+  }
+  cpu = {
+    cores = 4
+  }
+  memory = {
+    dedicated = 16
+  }
+  disks = {
+    os = {
+      size = 128
+    }
+  }
+}

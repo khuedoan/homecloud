@@ -1,7 +1,10 @@
 module "example" {
-  source     = "../modules/nixos-vm/"
-  name       = "example"
-  nixos_host = "nixos"
+  source = "../modules/nixos-vm/"
+  name   = "example"
+  nixos = {
+    flake = "../../global/images"
+    host  = "nixos"
+  }
   cpu = {
     cores = 2
   }

@@ -7,13 +7,11 @@ variable "node_name" {
   default = "proxmox"
 }
 
-variable "nixos_flake" {
-  type    = string
-  default = "../../global/images"
-}
-
-variable "nixos_host" {
-  type = string
+variable "nixos" {
+  type = object({
+    flake = string
+    host  = string
+  })
 }
 
 variable "cpu" {
