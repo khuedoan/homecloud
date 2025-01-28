@@ -1,6 +1,7 @@
 module "example" {
-  source = "../modules/nixos-vm/"
-  name   = "example"
+  source     = "../modules/nixos-vm/"
+  name       = "example"
+  nixos_host = "nixos"
   cpu = {
     cores = 2
   }

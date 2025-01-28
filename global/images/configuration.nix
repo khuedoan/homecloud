@@ -46,12 +46,6 @@
     };
   };
 
-  security = {
-    sudo = {
-      wheelNeedsPassword = false;
-    };
-  };
-
   users.users = {
     admin = {
       isNormalUser = true;

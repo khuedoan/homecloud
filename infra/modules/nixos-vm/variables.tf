@@ -13,8 +13,7 @@ variable "nixos_flake" {
 }
 
 variable "nixos_host" {
-  type    = string
-  default = "nixos"
+  type = string
 }
 
 variable "cpu" {
