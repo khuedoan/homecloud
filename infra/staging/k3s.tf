@@ -1,19 +1,19 @@
-module "example" {
+module "k3s" {
   source = "../modules/nixos-vm/"
-  name   = "example"
+  name   = "k3s"
   nixos = {
     flake = "../../nixos"
-    host  = "nixos"
+    host  = "k3s"
   }
   cpu = {
-    cores = 1
+    cores = 8
   }
   memory = {
-    dedicated = 2
+    dedicated = 16
   }
   disks = {
     os = {
-      size = 32
+      size = 256
     }
   }
 }
