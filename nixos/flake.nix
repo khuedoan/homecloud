@@ -8,6 +8,14 @@
   };
   outputs = { nixpkgs, disko, ... }: {
     nixosConfigurations = {
+      nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          ./configuration.nix
+          ./disks.nix
+        ];
+      };
       devbox = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [

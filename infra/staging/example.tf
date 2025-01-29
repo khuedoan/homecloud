@@ -2,7 +2,7 @@ module "example" {
   source = "../modules/nixos-vm/"
   name   = "example"
   nixos = {
-    flake = "../../global/images"
+    flake = "../../nixos"
     host  = "nixos"
   }
   cpu = {
