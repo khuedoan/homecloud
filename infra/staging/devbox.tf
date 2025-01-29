@@ -51,8 +51,8 @@ module "devbox" {
   source = "../modules/nixos-vm/"
   name   = "devbox"
   nixos = {
-    flake = "git+https://github.com/khuedoan/nixos-setup"
-    host  = "ryzentower"
+    flake = "../../nixos"
+    host  = "devbox"
   }
   cpu = {
     cores = 4
