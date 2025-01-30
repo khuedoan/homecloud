@@ -98,12 +98,22 @@ containers.
 
 OpenTofu (Terraform) PostgreSQL backend debugging example:
 
-```sh
-# Connect to staging state storage
-$ psql --user=tfstate --host=proxmox tfstate_staging
-# The table is keyed by the workspace name.
-# If workspaces are not in use, the name default is used.
-tfstate_staging=> SELECT * FROM terraform_remote_state.states;
+```sql
+-- Connect to staging state storage
+-- psql --user=tfstate --host=proxmox tfstate_staging
+-- The table is keyed by the workspace name.
+-- If workspaces are not in use, the name default is used.
+SELECT * FROM terraform_remote_state.states;
+```
+
+Unlock Terraform state:
+
+```sql
+-- Connect to the state storage
+-- Find the PID
+SELECT * FROM pg_locks WHERE locktype = 'advisory';
+-- Then unlock it
+SELECT pg_terminate_backend(<pid_here>);
 ```
 
 Update encrypted variables in Ansible Vault:
