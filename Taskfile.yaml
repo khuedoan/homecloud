@@ -8,9 +8,6 @@ includes:
   global:
     taskfile: ./global/Taskfile.yaml
     dir: ./global
-  infra:
-    taskfile: ./infra/Taskfile.yaml
-    dir: ./infra
 tasks:
   default:
     cmds:

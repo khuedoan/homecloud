@@ -18,7 +18,6 @@
           go-task
           jq
           kubectl
-          opentofu
           rsync
           sshpass
         ];
