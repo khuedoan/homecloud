@@ -4,10 +4,10 @@
     update_cache: false
     state: absent
   loop:
-    - deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise
-    - deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
+    - deb https://enterprise.proxmox.com/debian/ceph-quincy trixie enterprise
+    - deb https://enterprise.proxmox.com/debian/pve trixie pve-enterprise
 
 - name: Enable Proxmox VE No-Subscription repository
   ansible.builtin.apt_repository:
-    repo: deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
+    repo: deb http://download.proxmox.com/debian/pve trixie pve-no-subscription
     state: present

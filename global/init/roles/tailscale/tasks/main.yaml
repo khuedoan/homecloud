@@ -1,11 +1,11 @@
 - name: Add Tailscale signing key
   ansible.builtin.apt_key:
-    url: "https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg"
+    url: "https://pkgs.tailscale.com/stable/debian/trixie.noarmor.gpg"
     state: present
 
 - name: Add Tailscale repository
   ansible.builtin.apt_repository:
-    repo: "deb https://pkgs.tailscale.com/stable/debian bookworm main"
+    repo: "deb https://pkgs.tailscale.com/stable/debian trixie main"
     state: present
 
 - name: Install Tailscale
