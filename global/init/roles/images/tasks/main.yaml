@@ -7,6 +7,6 @@
     - url: https://channels.nixos.org/nixos-23.11/latest-nixos-gnome-x86_64-linux.iso
       name: nixos-23.11-gnome-x86_64-linux.iso
       checksum: sha256:a65a7706aee4ee0e233aaa081cda713a8d62173ae389c6bbbcf6d7a8b8757424
-    - url: https://channels.nixos.org/nixos-25.05/latest-nixos-minimal-x86_64-linux.iso
-      name: nixos-25.05-minimal-x86_64-linux.iso
+    - url: https://releases.nixos.org/nixos/25.05/nixos-25.05.808723.b1b329146965/nixos-minimal-25.05.808723.b1b329146965-x86_64-linux.iso
+      name: nixos-minimal-25.05.808723.b1b329146965-x86_64-linux.iso
       checksum: sha256:ffe739169b72fca92edea444bdadcaa58f4be98aacedf75d2ab8e233a71c215e
