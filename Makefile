@@ -24,5 +24,8 @@ test:
 		build-vm
 	./result/bin/run-testvm-vm
 
+fmt:
+	treefmt
+
 update:
 	nix flake update
