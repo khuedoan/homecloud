@@ -57,6 +57,9 @@
         443 # HTTPS
         8443 # TODO incus
       ];
+      trustedInterfaces = [
+        "incusbr0"
+      ];
     };
   };
 
