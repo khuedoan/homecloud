@@ -2,3 +2,5 @@
 .terraform
 .terraform.lock.hcl
 *.tfstate*
+*.qcow2
+/result
