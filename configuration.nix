@@ -99,11 +99,9 @@
       settings = {
         Peers = [
           # https://publicpeers.neilalexander.dev
-          "tls://sin.yuetau.net:6643" # Singapore
-          "tls://mima.localghost.org:443" # Philippines
+          "quic://asia.deinfra.org:15015" # Singapore
+          "quic://yg-hkg.magicum.net:32334" # Hong Kong
           "tls://133.18.201.69:54232" # Japan
-          "tls://vpn.itrus.su:7992" # Netherlands
-          "tls://ygg.jjolly.dev:3443" # United States
         ];
       };
     };
