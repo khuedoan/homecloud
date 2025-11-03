@@ -86,6 +86,9 @@
   services = {
     openssh = {
       enable = true;
+      settings = {
+        PasswordAuthentication = false;
+      };
     };
     fail2ban = {
       enable = true;
@@ -165,8 +168,6 @@
         "networkmanager"
         "wheel"
       ];
-      packages = with pkgs; [
-      ];
       # TODO better way to SSH, maybe without SSH key
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5ue4np7cF34f6dwqH1262fPjkowHQ8irfjVC156PCG"
@@ -175,12 +176,6 @@
   };
 
   system = {
-    autoUpgrade = {
-      enable = true;
-      flake = "github:khuedoan/tinycloud/incus";
-      allowReboot = true;
-    };
-
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It‘s perfectly fine and recommended to leave
