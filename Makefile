@@ -8,7 +8,7 @@ deploy:
 	nixos-rebuild \
 		--flake .#tinycloud \
 		--target-host root@192.168.1.20 \
-		test
+		switch
 
 install:
 	# TODO migrate to github.com/khuedoan/nixie
