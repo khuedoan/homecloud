@@ -3,11 +3,13 @@
 
 default: deploy
 
+HOST = 192.168.1.10
+
 deploy:
 	# TODO optimize this
 	nixos-rebuild \
 		--flake .#tinycloud \
-		--target-host root@192.168.1.20 \
+		--target-host root@${HOST} \
 		switch
 
 install:
@@ -16,7 +18,7 @@ install:
 	nixos-anywhere \
 		--no-substitute-on-destination \
 		--flake .#tinycloud \
-		--target-host root@192.168.1.20
+		--target-host root@${HOST}
 
 test:
 	nixos-rebuild \
