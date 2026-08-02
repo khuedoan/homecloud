@@ -100,6 +100,55 @@
     fail2ban = {
       enable = true;
     };
+    kanidm = {
+      package = pkgs.kanidm_1_10;
+      server = {
+        enable = true;
+        settings = {
+          bindaddress = "127.0.0.1:8444";
+          domain = "id.cloud.khuedoan.com";
+          origin = "https://id.cloud.khuedoan.com";
+          tls_chain = "/var/lib/acme/id.cloud.khuedoan.com/fullchain.pem";
+          tls_key = "/var/lib/acme/id.cloud.khuedoan.com/key.pem";
+          online_backup = {
+            path = "/var/lib/kanidm/backups";
+            schedule = "00 22 * * *";
+            versions = 7;
+          };
+        };
+      };
+      client = {
+        enable = true;
+        settings = {
+          uri = "https://id.cloud.khuedoan.com";
+          verify_ca = true;
+          verify_hostnames = true;
+        };
+      };
+      provision = {
+        enable = true;
+        instanceUrl = "https://localhost:8444";
+        acceptInvalidCerts = true;
+        groups.incus-users = { };
+        persons = {
+          khuedoan = {
+            displayName = "Khue Doan";
+            groups = [ "incus-users" ];
+          };
+        };
+        systems.oauth2.incus = {
+          displayName = "Incus";
+          public = true;
+          originUrl = "https://cloud.khuedoan.com/oidc/callback";
+          originLanding = "https://cloud.khuedoan.com/ui/";
+          scopeMaps.incus-users = [
+            "openid"
+            "profile"
+            "email"
+          ];
+        };
+      };
+    };
     yggdrasil = {
       enable = true;
       persistentKeys = true;
