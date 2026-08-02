@@ -85,6 +85,7 @@
       gcc
       git
       gnumake
+      jq
       neovim
       tmux
     ];

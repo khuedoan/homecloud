@@ -70,6 +70,25 @@ tailscale up --accept-dns=false
 Follow the link to authenticate and optionally disable key expiry in Tailscale admin console.
 From now on, Proxmox is accessible from the Tailnet via <https://proxmox:8006>.
 
+## User management
+
+Add the person to `services.kanidm.provision.persons`.
+
+```nix
+persons.alice = {
+  displayName = "Alice Example";
+  mailAddresses = [ "alice@example.com" ];
+  # Membership in `incus-users` grants full administrative access to Incus.
+  groups = [ "incus-users" ];
+};
+```
+
+Generate an enrollment link interactively:
+
+```sh
+make enroll username=khuedoan
+```
+
 ## Project structure
 
 - `global`: manage users, groups, etc.
