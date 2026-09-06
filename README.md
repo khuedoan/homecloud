@@ -75,52 +75,12 @@ make enroll username=khuedoan
 
 ## Project structure
 
-- `global`: manage users, groups, etc.
-- `staging`: staging environment
-- `production`: production environment
-
-To apply an environment, e.g. staging:
-
-```sh
-task ENV=staging infra
-```
-
-To build and upload images:
-
-```sh
-task global:images
-```
-
-The images are fully producible and hermetic. In theory, any instance running
-`nixos-rebuild` on the same flake will be updated to essentially the same
-configuration as if it were replaced by a new image, but I haven't got this to
-work with LXC images yet, so right now I just taint and replace the LXC
-containers.
-
-## Tips and tricks
-
-OpenTofu (Terraform) PostgreSQL backend debugging example:
-
-```sql
--- Connect to staging state storage
--- psql --user=tfstate --host=proxmox tfstate_staging
--- The table is keyed by the workspace name.
--- If workspaces are not in use, the name default is used.
-SELECT * FROM terraform_remote_state.states;
-```
-
-Unlock Terraform state:
-
-```sql
--- Connect to the state storage
--- Find the PID
-SELECT * FROM pg_locks WHERE locktype = 'advisory';
--- Then unlock it
-SELECT pg_terminate_backend(<pid_here>);
-```
-
-Update encrypted variables in Ansible Vault:
-
-```sh
-ansible-vault edit example/path/to/vault.yaml
-```
+- `configuration.nix` configures the metal host and its services.
+- `hosts/installer.nix` configures the Nixie PXE installer.
+- `hosts/testvm.nix` adds the settings for the local QEMU test VM.
+- `hosts.json` stores the host address and installation identity that Nixie
+  manages.
+- `flake.nix` defines the installer, the metal host, the test VM, and the
+  development shell.
+- `Makefile` defines the installation, deployment, enrollment, and development
+  commands.
