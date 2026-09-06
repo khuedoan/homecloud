@@ -255,7 +255,7 @@ in
             name = "default";
             driver = "btrfs";
             config = {
-              size = "30GiB"; # TODO auto?
+              size = "750GiB"; # TODO auto?
             };
           }
         ];
