@@ -33,12 +33,12 @@
           modules = [
             disko.nixosModules.disko
             ./configuration.nix
+            ./hosts/homecloud.nix
           ];
         };
         testvm = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            disko.nixosModules.disko
             ./configuration.nix
             ./hosts/testvm.nix
           ];

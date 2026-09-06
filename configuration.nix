@@ -8,38 +8,6 @@ let
   idUrl = "https://${idHost}";
 in
 {
-  disko.devices = {
-    disk = {
-      main = {
-        type = "disk";
-        device = "/dev/disk/by-id/ata-CT1000MX500SSD1_2209E614C62F";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              type = "EF00";
-              size = "1G";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
-              };
-            };
-            root = {
-              size = "100%";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
-              };
-            };
-          };
-        };
-      };
-    };
-  };
-
   boot = {
     loader = {
       systemd-boot = {
@@ -247,15 +215,6 @@ in
             config = {
               "ipv4.address" = "auto";
               "ipv6.address" = "auto";
-            };
-          }
-        ];
-        storage_pools = [
-          {
-            name = "default";
-            driver = "btrfs";
-            config = {
-              size = "750GiB"; # TODO auto?
             };
           }
         ];

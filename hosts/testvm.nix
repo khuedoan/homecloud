@@ -9,6 +9,13 @@
     hostName = lib.mkForce "testvm";
   };
 
+  virtualisation.incus.preseed.storage_pools = [
+    {
+      name = "default";
+      driver = "btrfs";
+    }
+  ];
+
   virtualisation = {
     cores = 2;
     memorySize = 8192;
