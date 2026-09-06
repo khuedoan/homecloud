@@ -63,7 +63,6 @@ in
       allowedTCPPorts = [
         80 # HTTP
         443 # HTTPS
-        8443 # TODO incus
       ];
       trustedInterfaces = [
         "incusbr0"
@@ -117,6 +116,7 @@ in
         proxy_ssl_name $server_name;
         proxy_ssl_trusted_certificate ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt;
         proxy_ssl_verify on;
+        proxy_ssl_verify_depth 4;
       '';
       virtualHosts = {
         "${cloudHost}" = {
@@ -232,7 +232,7 @@ in
       };
       preseed = {
         config = {
-          "core.https_address" = ":8443";
+          "core.https_address" = "127.0.0.1:8443";
           "oidc.audience" = "incus";
           "oidc.client.id" = "incus";
           "oidc.issuer" = "${idUrl}/oauth2/openid/incus";
