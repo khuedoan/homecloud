@@ -7,14 +7,45 @@
 
   networking = {
     hostName = lib.mkForce "testvm";
+    firewall.trustedInterfaces = [ "incusbr0" ];
+    networkmanager.enable = true;
   };
 
-  virtualisation.incus.preseed.storage_pools = [
-    {
-      name = "default";
-      driver = "btrfs";
-    }
-  ];
+  virtualisation.incus.preseed = {
+    networks = [
+      {
+        name = "incusbr0";
+        type = "bridge";
+        config = {
+          "ipv4.address" = "auto";
+          "ipv6.address" = "auto";
+        };
+      }
+    ];
+    storage_pools = [
+      {
+        name = "default";
+        driver = "btrfs";
+      }
+    ];
+    profiles = [
+      {
+        name = "default";
+        devices = {
+          eth0 = {
+            name = "eth0";
+            network = "incusbr0";
+            type = "nic";
+          };
+          root = {
+            path = "/";
+            pool = "default";
+            type = "disk";
+          };
+        };
+      }
+    ];
+  };
 
   virtualisation = {
     cores = 2;
@@ -41,6 +72,7 @@
 
   users.users.admin = {
     password = "testvm";
+    extraGroups = [ "networkmanager" ];
   };
   services.getty.autologinUser = "admin";
   security.sudo.wheelNeedsPassword = false;

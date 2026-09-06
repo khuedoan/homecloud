@@ -21,9 +21,6 @@ in
 
   networking = {
     hostName = "homecloud";
-    networkmanager = {
-      enable = true;
-    };
     nftables = {
       enable = true;
     };
@@ -31,9 +28,6 @@ in
       allowedTCPPorts = [
         80 # HTTP
         443 # HTTPS
-      ];
-      trustedInterfaces = [
-        "incusbr0"
       ];
     };
   };
@@ -207,34 +201,6 @@ in
           "oidc.scopes" = "openid,profile,email";
           "user.ui.title" = "HomeCloud";
         };
-        networks = [
-          {
-            name = "incusbr0";
-            project = "default";
-            type = "bridge";
-            config = {
-              "ipv4.address" = "auto";
-              "ipv6.address" = "auto";
-            };
-          }
-        ];
-        profiles = [
-          {
-            name = "default";
-            devices = {
-              eth0 = {
-                name = "eth0";
-                network = "incusbr0";
-                type = "nic";
-              };
-              root = {
-                path = "/";
-                pool = "default";
-                type = "disk";
-              };
-            };
-          }
-        ];
       };
     };
   };
@@ -252,7 +218,6 @@ in
     admin = {
       isNormalUser = true;
       extraGroups = [
-        "networkmanager"
         "wheel"
       ];
       # TODO better way to SSH, maybe without SSH key
