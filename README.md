@@ -49,7 +49,7 @@ A DHCP reservation is the most reliable option. Nixie writes the IP address and
 machine ID hash to `hosts.json`. Read the address with:
 
 ```sh
-jq -r '.tinycloud.ip' hosts.json
+jq -r '.homecloud.ip' hosts.json
 ```
 
 Use one-time PXE boot. The host must boot from the local disk after installation.

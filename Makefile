@@ -3,14 +3,14 @@
 
 default: deploy
 
-HOST = $(shell jq -er '.tinycloud.ip' hosts.json)
+HOST = $(shell jq -er '.homecloud.ip' hosts.json)
 SSH_KEY = ${HOME}/.ssh/id_ed25519
 PXE_ADDRESS = $(shell ip -4 -o address show dev eth0 scope global | awk '{ sub(/\/.*/, "", $$4); print $$4 }')
 
 deploy:
 	# TODO optimize this
 	nixos-rebuild \
-		--flake .#tinycloud \
+		--flake .#homecloud \
 		--target-host root@${HOST} \
 		switch
 

@@ -28,7 +28,7 @@
             ./hosts/installer.nix
           ];
         };
-        tinycloud = nixpkgs.lib.nixosSystem {
+        homecloud = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             disko.nixosModules.disko
