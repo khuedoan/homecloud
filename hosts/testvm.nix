@@ -1,4 +1,4 @@
-{ modulesPath, ... }:
+{ lib, modulesPath, ... }:
 
 {
   imports = [
@@ -6,7 +6,7 @@
   ];
 
   networking = {
-    hostName = "testvm";
+    hostName = lib.mkForce "testvm";
   };
 
   virtualisation = {

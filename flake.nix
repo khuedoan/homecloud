@@ -7,16 +7,27 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixie = {
+      url = "github:khuedoan/nixie";
+    };
   };
 
   outputs =
     {
-      self,
       nixpkgs,
       disko,
+      nixie,
+      ...
     }:
     {
       nixosConfigurations = {
+        installer = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            nixie.nixosModules.nixie-agent
+            ./hosts/installer.nix
+          ];
+        };
         tinycloud = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
@@ -41,6 +52,7 @@
               gnumake
               incus
               nixfmt-tree
+              nixie.packages.${system}.default
               nixos-anywhere
             ];
           };

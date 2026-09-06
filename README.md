@@ -19,13 +19,13 @@ such as redundancy, multiple regions, health checks, etc.
 
 A few key components are necessary:
 
-- Proxmox provides the hypervisor, a web console, and management APIs (which can
-  be automated with OpenTofu - a Terraform fork).
-- Managed services are immutable VM/LXC images built with NixOS.
+- Nixie installs NixOS on the metal host through PXE.
+- Incus provides virtual machines, containers, and management APIs.
+- NixOS configures the host and its services.
 
 I use this project for three main purposes:
 
-- Offsite backup: the Proxmox node is located at my parents' house in a different
+- Offsite backup: the metal host is located at my parents' house in a different
   region of my country, with a separate disk that I mount to a VM running Minio.
 - External monitoring system for my main monitoring system: [quis custodiet ipsos custodes?](https://en.wikipedia.org/wiki/Quis_custodiet_ipsos_custodes%3F)
 - A flexible playground: because my main Kubernetes cluster runs on bare-metal nodes,
@@ -34,41 +34,25 @@ I use this project for three main purposes:
 
 ## Installation
 
-### Proxmox Virtual Environment
+### Metal host
 
-Download Proxmox VE ISO:
-
-<https://www.proxmox.com/en/downloads>
-
-Write it to a USB drive:
+Enable UEFI PXE boot on the host. Then start the Nixie PXE server and installation:
 
 ```sh
-lsblk
-sudo dd bs=1M if=proxmox-ve_${VERSION}.iso of=/dev/${USB_DRIVE}
+make install
 ```
 
-Then boot to the USB drive and install Proxmox.
+The command uses Ethernet interface `eth0` and SSH key `~/.ssh/id_ed25519`.
 
-- Hostname: `proxmox`
-- Root password: save it to a password manager
-
-### Prerequisites for automation
-
-There are some initial setup for Proxmox and OpenTofu state backend:
+Keep the same DHCP lease while the installer reboots into the installed system.
+A DHCP reservation is the most reliable option. Nixie writes the IP address and
+machine ID hash to `hosts.json`. Read the address with:
 
 ```sh
-task global:init
+jq -r '.tinycloud.ip' hosts.json
 ```
 
-Then connect it to Tailscale:
-
-```sh
-ssh root@${PROXMOX_IP}
-tailscale up --accept-dns=false
-```
-
-Follow the link to authenticate and optionally disable key expiry in Tailscale admin console.
-From now on, Proxmox is accessible from the Tailnet via <https://proxmox:8006>.
+Use one-time PXE boot. The host must boot from the local disk after installation.
 
 ## User management
 

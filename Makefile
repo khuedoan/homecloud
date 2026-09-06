@@ -1,9 +1,11 @@
 .POSIX:
-.PHONY: default deploy enroll install test update
+.PHONY: default deploy enroll fmt install test update
 
 default: deploy
 
-HOST = 192.168.1.10
+HOST = $(shell jq -er '.tinycloud.ip' hosts.json)
+SSH_KEY = ${HOME}/.ssh/id_ed25519
+PXE_ADDRESS = $(shell ip -4 -o address show dev eth0 scope global | awk '{ sub(/\/.*/, "", $$4); print $$4 }')
 
 deploy:
 	# TODO optimize this
@@ -23,12 +25,17 @@ enroll:
 	'
 
 install:
-	# TODO migrate to github.com/khuedoan/nixie
-	# Currently can't use PXE boot because the stupid hardware
-	nixos-anywhere \
-		--no-substitute-on-destination \
-		--flake .#tinycloud \
-		--target-host root@${HOST}
+	@test -n "${PXE_ADDRESS}" || { \
+		echo "eth0 has no IPv4 address" >&2; \
+		exit 1; \
+	}
+	sudo env "PATH=$$PATH" nixie \
+		--address "${PXE_ADDRESS}" \
+		--installer .#nixosConfigurations.installer \
+		--flake . \
+		--hosts hosts.json \
+		--install-ssh-key "${SSH_KEY}" \
+		--deployment-ssh-key "${SSH_KEY}"
 
 test:
 	nixos-rebuild \
