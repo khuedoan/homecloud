@@ -68,6 +68,7 @@
     profiles = [
       {
         name = "default";
+        config."security.secureboot" = "false";
         devices = {
           eth0 = {
             name = "eth0";
