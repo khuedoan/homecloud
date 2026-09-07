@@ -1,0 +1,19 @@
+config:
+  limits.cpu: "6"
+  limits.memory: 16GiB
+devices:
+  eth0:
+    boot.priority: "10"
+    hwaddr: 10:66:6a:3f:86:c7
+    name: eth0
+    nictype: bridged
+    parent: br0
+    type: nic
+  root:
+    boot.priority: "20"
+    path: /
+    pool: default
+    size: 128GiB
+    type: disk
+profiles:
+  - default

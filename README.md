@@ -73,6 +73,14 @@ Generate an enrollment link interactively:
 make enroll username=khuedoan
 ```
 
+## Create VMs
+
+Define the VM in `./instance/{name}.yaml`, then run:
+
+```sh
+make vm name=codeserver
+```
+
 ## Project structure
 
 - `configuration.nix` configures the metal host and its services.
@@ -80,6 +88,7 @@ make enroll username=khuedoan
 - `hosts/testvm.nix` adds the settings for the local QEMU test VM.
 - `hosts.json` stores the host address and installation identity that Nixie
   manages.
+- `instances` stores the configuration for empty Incus VMs.
 - `flake.nix` defines the installer, the metal host, the test VM, and the
   development shell.
 - `Makefile` defines the installation, deployment, enrollment, and development

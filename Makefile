@@ -1,5 +1,5 @@
 .POSIX:
-.PHONY: default deploy enroll fmt install test update
+.PHONY: default deploy enroll vm fmt install test update
 
 default: deploy
 
@@ -23,6 +23,10 @@ enroll:
 		KANIDM_PASSWORD="$$password" kanidm login -D idm_admin; \
 		kanidm person credential create-reset-token -D idm_admin "${username}" \
 	'
+
+vm:
+	ssh root@${HOST} incus info "${name}" >/dev/null 2>&1 || \
+		ssh root@${HOST} incus init --empty --vm "${name}" < "instances/${name}.yaml"
 
 install:
 	@test -n "${PXE_ADDRESS}" || { \
