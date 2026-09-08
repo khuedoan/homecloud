@@ -15,5 +15,7 @@ devices:
     pool: default
     size: 128GiB
     type: disk
+  tpm:
+    type: tpm
 profiles:
   - default
