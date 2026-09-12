@@ -1,0 +1,21 @@
+config:
+  limits.cpu: "4"
+  limits.memory: 8GiB
+devices:
+  eth0:
+    boot.priority: "10"
+    hwaddr: 02:36:52:8d:5e:c7
+    name: eth0
+    nictype: bridged
+    parent: br0
+    type: nic
+  root:
+    boot.priority: "20"
+    path: /
+    pool: default
+    size: 128GiB
+    type: disk
+  tpm:
+    type: tpm
+profiles:
+  - default
