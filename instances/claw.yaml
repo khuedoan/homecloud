@@ -1,6 +1,6 @@
 config:
-  limits.cpu: "4"
-  limits.memory: 8GiB
+  limits.cpu: "2"
+  limits.memory: 4GiB
 devices:
   eth0:
     boot.priority: "10"
