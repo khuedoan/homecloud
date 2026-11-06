@@ -63,11 +63,6 @@
         host.port = 4646;
         guest.port = 4646;
       }
-      {
-        from = "host";
-        host.port = 8443;
-        guest.port = 8443;
-      }
     ];
   };
 

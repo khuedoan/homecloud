@@ -54,24 +54,27 @@ jq -r '.homecloud.ip' hosts.json
 
 Use one-time PXE boot. The host must boot from the local disk after installation.
 
-## User management
+## Manage Incus
 
-Add the person to `services.kanidm.provision.persons`.
+Manage Incus with the CLI through SSH on the metal host. Access uses the SSH
+keys in `users.users`.
 
-```nix
-persons.alice = {
-  displayName = "Alice Example";
-  mailAddresses = [ "alice@example.com" ];
-  # Membership in `incus-users` grants full administrative access to Incus.
-  groups = [ "incus-users" ];
-};
-```
-
-Generate an enrollment link interactively:
+Open an SSH session:
 
 ```sh
-make enroll username=khuedoan
+ssh root@$(jq -r '.homecloud.ip' hosts.json)
 ```
+
+Run Incus commands on the host:
+
+```sh
+incus list
+incus console codeserver
+incus exec codeserver -- bash
+```
+
+Use `incus console` for console access. `incus exec` requires the Incus agent
+inside a VM. You can also SSH directly into guests with SSH configured.
 
 ## Create VMs
 
@@ -91,5 +94,5 @@ make vm name=codeserver
 - `instances` stores the configuration for empty Incus VMs.
 - `flake.nix` defines the installer, the metal host, the test VM, and the
   development shell.
-- `Makefile` defines the installation, deployment, enrollment, and development
+- `Makefile` defines the installation, deployment, and development
   commands.

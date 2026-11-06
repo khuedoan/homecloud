@@ -1,5 +1,5 @@
 .POSIX:
-.PHONY: default deploy enroll vm fmt install test update
+.PHONY: default deploy vm fmt install test update
 
 default: deploy
 
@@ -13,16 +13,6 @@ deploy:
 		--flake .#homecloud \
 		--target-host root@${HOST} \
 		switch
-
-enroll:
-	@ssh -t root@${HOST} '\
-		set -eu; \
-		password=$$(sudo -u kanidm kanidmd scripting recover-account \
-			-c /etc/kanidm/server.toml idm_admin | jq -er .output); \
-		trap "kanidm logout -D idm_admin || true" EXIT; \
-		KANIDM_PASSWORD="$$password" kanidm login -D idm_admin; \
-		kanidm person credential create-reset-token -D idm_admin "${username}" \
-	'
 
 vm:
 	ssh root@${HOST} incus info "${name}" >/dev/null 2>&1 || \
