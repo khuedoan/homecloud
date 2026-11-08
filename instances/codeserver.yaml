@@ -13,7 +13,7 @@ devices:
     boot.priority: "20"
     path: /
     pool: default
-    size: 128GiB
+    size: 256GiB
     type: disk
   tpm:
     type: tpm

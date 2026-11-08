@@ -1,7 +1,7 @@
 config:
   user.zfs.primarycache: all
   limits.cpu: "3"
-  limits.memory: 5GiB
+  limits.memory: 6GiB
 devices:
   eth0:
     boot.priority: "10"

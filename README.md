@@ -78,7 +78,7 @@ inside a VM. You can also SSH directly into guests with SSH configured.
 
 ## Create VMs
 
-Define the VM in `./instance/{name}.yaml`, then run:
+Define the VM in `./instances/{name}.yaml`, then run:
 
 ```sh
 make vm name=codeserver
