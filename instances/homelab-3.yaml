@@ -1,4 +1,5 @@
 config:
+  user.zfs.primarycache: all
   limits.cpu: "3"
   limits.memory: 5GiB
 devices:

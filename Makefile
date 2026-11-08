@@ -17,6 +17,13 @@ deploy:
 vm:
 	ssh root@${HOST} incus info "${name}" >/dev/null 2>&1 || \
 		ssh root@${HOST} incus init --empty --vm "${name}" < "instances/${name}.yaml"
+	@ssh root@${HOST} '\
+		set -eu; \
+		cache=$$(incus config get "${name}" user.zfs.primarycache); \
+		if [ -n "$$cache" ]; then \
+			zfs set "primarycache=$$cache" "default/virtual-machines/${name}.block"; \
+		fi \
+	'
 
 install:
 	@test -n "${PXE_ADDRESS}" || { \
